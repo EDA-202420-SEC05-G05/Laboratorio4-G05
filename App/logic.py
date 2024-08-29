@@ -26,6 +26,7 @@
 
 import csv
 import os
+from DataStructures.List import single_linked_list as lt
 # TODO Importar la libreria correspondiente para el manejo de listas sencillamente enlazadas
 
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
@@ -46,10 +47,10 @@ def new_logic():
                'tags': None,
                'book_tags': None}
     
-    catalog['books'] = # TODO Implementar la inicialización de la lista de libros
+    catalog['books'] = lt.new_list()# TODO Implementar la inicialización de la lista de libros
     catalog['authors']= lt.new_list()
-    catalog['tags']=  #TODO Implementar la inicialización de la lista de tags
-    catalog['book_tags'] = # TODO Implementar la inicialización de la lista de asociación de libros y tags
+    catalog['tags']= lt.new_list() #TODO Implementar la inicialización de la lista de tags
+    catalog['book_tags'] =lt.new_list() # TODO Implementar la inicialización de la lista de asociación de libros y tags
     return catalog
 
 
@@ -106,7 +107,12 @@ def get_best_avg_rating(catalog):
     Retorna el libro con el mayor rating promedio (avg_rating) de los datos
     """
     # TODO Implementar la función para obtener el libro con el mayor avg_rating
-
+    
+    lista_grande = catalog["books"]
+    for book in lt.interator(lista_grande)
+        book["average_rating"] = ratings
+        if ratings 
+    
 def get_books_by_author(catalog, author_name):
     """
     Retrona los libros de un autor

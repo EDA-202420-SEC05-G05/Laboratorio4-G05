@@ -1,15 +1,31 @@
+import list_node as nd
+
 def new_list():
     newlist = {"first": None, "last":None, "size":0}
     return newlist
 
 def add_first(lista,element):
-    lista["first"].insert(0,element)
-    lista["size"]+=1
+    nodo = nd.new_single_node(element)
+    if lista["size"] == 0:
+        lista["first"] = nodo
+        lista["size"]+=1
+    else:
+        primero_antes = lista["first"]
+        nodo["next"] = primero_antes
+        lista["first"] = nodo
+        lista["size"]+=1
     return lista
 
 def add_last(lista, element):
-    lista["last"].append(element)
-    lista["size"]+=1
+    nodo = nd.new_single_node(element)
+    if lista["size"] == 0:
+        lista["first"] = nodo
+        lista["last"] = nodo
+        lista["size"]+=1
+    else:
+        lista["last"]["next"] = nodo 
+        lista["last"] = nodo
+        lista["size"]+=1
     return lista
 
 def is_empty(lista):
@@ -23,11 +39,11 @@ def size(lista):
 
 def first_element(lista):
     if is_empty(lista) == False:
-        return lista["first"]["info"]
+        return nd.get_element(lista["first"])
 
 def last_element(lista):
     if is_empty(lista) == False:
-        return lista["last"]["info"]
+        return nd.get_element(lista["last"])
     
 def get_element(lista,pos):
     if pos < 0:
@@ -36,13 +52,18 @@ def get_element(lista,pos):
     current = lista["first"]
     while i < lista["size"]:
         if i == pos:
-            return current["info"]
+            return nd.get_element(current)
         i+=1
-        current["next"]
+        current = current["next"]
         
-def delete_element(lista,pos):
-    if is_empty(lista) == True:
-        raise IndexError("la lista no puede estar vacia")
-    else:
+
+
+def interator(lista):
+    current = lista["first"]
+    lista_n = []
+    while current != None:
+        lista_n.append(nd.get_element(current))
+        current = current["next"]
+    return lista_n
         
         
