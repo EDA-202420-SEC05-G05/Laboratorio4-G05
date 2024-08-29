@@ -109,9 +109,15 @@ def get_best_avg_rating(catalog):
     # TODO Implementar la función para obtener el libro con el mayor avg_rating
     
     lista_grande = catalog["books"]
+    rating = 0
+    libro_max = None
     for book in lt.interator(lista_grande)
-        book["average_rating"] = ratings
-        if ratings 
+        rating_libro = book["average_rating"]
+        if rating < rating_libro:
+            libro_max = book
+            rating = rating_libro
+    return book
+        
     
 def get_books_by_author(catalog, author_name):
     """
@@ -136,6 +142,7 @@ def get_book_info_by_book_id(catalog, book_id):
 def get_first_last_books(catalog, top):
     # TODO Implementar la función que retorne dos listas con los n primeros y ultimos libros cargados
     return first_elems, last_elems
+    #quien esta hacinedo esto???
 
 def count_books_by_tag(catalog, tag):
     """
