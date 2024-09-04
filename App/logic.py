@@ -26,6 +26,7 @@
 
 import csv
 import os
+from DataStructures.List import single_linked_list as lt
 # TODO Importar la libreria correspondiente para el manejo de listas sencillamente enlazadas
 
 data_dir = os.path.dirname(os.path.realpath('__file__')) + '/Data/'
@@ -46,10 +47,10 @@ def new_logic():
                'tags': None,
                'book_tags': None}
     
-    catalog['books'] = # TODO Implementar la inicialización de la lista de libros
+    catalog['books'] = lt.new_list()# TODO Implementar la inicialización de la lista de libros
     catalog['authors']= lt.new_list()
-    catalog['tags']=  #TODO Implementar la inicialización de la lista de tags
-    catalog['book_tags'] = # TODO Implementar la inicialización de la lista de asociación de libros y tags
+    catalog['tags']= lt.new_list() #TODO Implementar la inicialización de la lista de tags
+    catalog['book_tags'] =lt.new_list() # TODO Implementar la inicialización de la lista de asociación de libros y tags
     return catalog
 
 
@@ -106,7 +107,18 @@ def get_best_avg_rating(catalog):
     Retorna el libro con el mayor rating promedio (avg_rating) de los datos
     """
     # TODO Implementar la función para obtener el libro con el mayor avg_rating
-
+    
+    lista_grande = catalog["books"]
+    rating = 0
+    libro_max = None
+    for book in lt.interator(lista_grande):
+        rating_libro = book["average_rating"]
+        if rating < rating_libro:
+            libro_max = book
+            rating = rating_libro
+    return book
+        
+    
 def get_books_by_author(catalog, author_name):
     """
     Retrona los libros de un autor
@@ -129,13 +141,55 @@ def get_book_info_by_book_id(catalog, book_id):
 
 def get_first_last_books(catalog, top):
     # TODO Implementar la función que retorne dos listas con los n primeros y ultimos libros cargados
-    return first_elems, last_elems
+    first_element = {"first": None, "size": 0}
+    last_element = {"first": None, "size": 0}
+
+    current = catalog["first"]
+    index = 0
+    while current is not None and index < top:
+        new_node = {"info": current["info"], "next": first_element["first"]}
+        
+        first_element["first"] = new_node
+        first_element["size"] += 1
+        current = current["next"]
+        index += 1
+
+    current = catalog["first"]
+    total_size = catalog["size"]
+    
+    skip = max(0, total_size - top)
+    index = 0
+    while current is not None:
+        if index >= skip:
+            
+            new_node = {"info": current["info"], "next": last_element["first"]}
+            last_element["first"] = new_node
+            last_element["size"] += 1
+        current = current["next"]
+        
+        index += 1
+
+    return first_element, last_element
+
+
+
+    #quien esta hacinedo esto???
 
 def count_books_by_tag(catalog, tag):
     """
     Retorna el conteo de libros que tienen asociado el tag solicitado.
     """
     # TODO Implementar la función de conteo de libros por tag
+    count = 0
+    current = catalog["first"]
+    
+    while current is not None:
+        if tag in current["info"]["tags"]:  
+            count += 1
+        current = current["next"]  
+
+    return count
+
 
 # Funciones para agregar informacion al catalogo
 
@@ -252,9 +306,15 @@ def compare_tag_names(name, tag):
 
 def compare_book_ids(id, book):
 # TODO Implementar la función de comparación por book id
+    if "id" not in book:
+        raise ValueError("El libro no id.")
+
+    book_id = book['id']
+    return lt.compare_elements(id, book_id)
+
 
 
 # funciones para comparar elementos dentro de algoritmos de ordenamientos
 
-def compare_ratings(book1, book2):
+def compare_ratings(book1, book2): 
     return (float(book1['average_rating']) > float(book2['average_rating']))
